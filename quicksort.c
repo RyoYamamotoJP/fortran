@@ -107,10 +107,8 @@ static inline struct partition ipartition(int a[], int lo, int hi, int ip[])
 
 void fquicksort(float a[], int lo, int hi, int ip[])
 {
-	struct partition p;
-
 	if (lo < hi) {
-		p = fpartition(a, lo, hi, ip);
+		struct partition p = fpartition(a, lo, hi, ip);
 		fquicksort(a, lo, p.left, ip);
 		fquicksort(a, p.right, hi, ip);
 	}
@@ -118,10 +116,8 @@ void fquicksort(float a[], int lo, int hi, int ip[])
 
 void iquicksort(int a[], int lo, int hi, int ip[])
 {
-	struct partition p;
-
 	if (lo < hi) {
-		p = ipartition(a, lo, hi, ip);
+		struct partition p = ipartition(a, lo, hi, ip);
 		iquicksort(a, lo, p.left, ip);
 		iquicksort(a, p.right, hi, ip);
 	}
