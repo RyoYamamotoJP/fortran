@@ -1,17 +1,17 @@
 void fquicksort(float a[], int lo, int hi, int ip[]);
 void iquicksort(int a[], int lo, int hi, int ip[]);
 
-struct partition fpartition(float a[], int lo, int hi, int ip[]);
-struct partition ipartition(int a[], int lo, int hi, int ip[]);
+static inline struct partition fpartition(float a[], int lo, int hi, int ip[]);
+static inline struct partition ipartition(int a[], int lo, int hi, int ip[]);
 
-float fmedian3(float a[], int lo, int hi, int ip[]);
-int imedian3(int a[], int lo, int hi, int ip[]);
+static inline float fmedian3(float a[], int lo, int hi, int ip[]);
+static inline int imedian3(int a[], int lo, int hi, int ip[]);
 
-void fswap_elements(float a[], int i, int j, int ip[]);
-void iswap_elements(int a[], int i, int j, int ip[]);
+static inline void fswap_elements(float a[], int i, int j, int ip[]);
+static inline void iswap_elements(int a[], int i, int j, int ip[]);
 
-void fswap(float *a, float *b);
-void iswap(int *a, int *b);
+static inline void fswap(float *a, float *b);
+static inline void iswap(int *a, int *b);
 
 struct partition {
 	int left;
@@ -40,7 +40,7 @@ void iquicksort(int a[], int lo, int hi, int ip[])
 	}
 }
 
-struct partition fpartition(float a[], int lo, int hi, int ip[])
+static inline struct partition fpartition(float a[], int lo, int hi, int ip[])
 {
 	float pivot = fmedian3(a, lo, hi, ip);
 	int i = lo - 1;
@@ -60,7 +60,7 @@ struct partition fpartition(float a[], int lo, int hi, int ip[])
 	return (struct partition){j, i + 1};
 }
 
-struct partition ipartition(int a[], int lo, int hi, int ip[])
+static inline struct partition ipartition(int a[], int lo, int hi, int ip[])
 {
 	int pivot = imedian3(a, lo, hi, ip);
 	int i = lo - 1;
@@ -80,7 +80,7 @@ struct partition ipartition(int a[], int lo, int hi, int ip[])
 	return (struct partition){j, i + 1};
 }
 
-float fmedian3(float a[], int lo, int hi, int ip[])
+static inline float fmedian3(float a[], int lo, int hi, int ip[])
 {
 	int mid = lo + (hi - lo) / 2;
 
@@ -94,7 +94,7 @@ float fmedian3(float a[], int lo, int hi, int ip[])
 	return a[hi];
 }
 
-int imedian3(int a[], int lo, int hi, int ip[])
+static inline int imedian3(int a[], int lo, int hi, int ip[])
 {
 	int mid = lo + (hi - lo) / 2;
 
@@ -108,21 +108,21 @@ int imedian3(int a[], int lo, int hi, int ip[])
 	return a[hi];
 }
 
-void fswap_elements(float a[], int i, int j, int ip[])
+static inline void fswap_elements(float a[], int i, int j, int ip[])
 {
 	fswap(&a[i], &a[j]);
 	if (ip)
 		iswap(&ip[i], &ip[j]);
 }
 
-void iswap_elements(int a[], int i, int j, int ip[])
+static inline void iswap_elements(int a[], int i, int j, int ip[])
 {
 	iswap(&a[i], &a[j]);
 	if (ip)
 		iswap(&ip[i], &ip[j]);
 }
 
-void fswap(float *a, float *b)
+static inline void fswap(float *a, float *b)
 {
 	float temp;
 
@@ -131,7 +131,7 @@ void fswap(float *a, float *b)
 	*b = temp;
 }
 
-void iswap(int *a, int *b)
+static inline void iswap(int *a, int *b)
 {
 	int temp;
 
