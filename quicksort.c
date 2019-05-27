@@ -1,42 +1,68 @@
 #include "quicksort.h"
 
-static inline struct partition fpartition(float a[], int lo, int hi, int ip[]);
-static inline struct partition ipartition(int a[], int lo, int hi, int ip[]);
-
-static inline float fmedian3(float a[], int lo, int hi, int ip[]);
-static inline int imedian3(int a[], int lo, int hi, int ip[]);
-
-static inline void fswap_elements(float a[], int i, int j, int ip[]);
-static inline void iswap_elements(int a[], int i, int j, int ip[]);
-
-static inline void fswap(float *a, float *b);
-static inline void iswap(int *a, int *b);
-
 struct partition {
 	int left;
 	int right;
 };
 
-void fquicksort(float a[], int lo, int hi, int ip[])
+static inline void fswap(float *a, float *b)
 {
-	struct partition p;
+	float temp;
 
-	if (lo < hi) {
-		p = fpartition(a, lo, hi, ip);
-		fquicksort(a, lo, p.left, ip);
-		fquicksort(a, p.right, hi, ip);
-	}
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }
 
-void iquicksort(int a[], int lo, int hi, int ip[])
+static inline void iswap(int *a, int *b)
 {
-	struct partition p;
+	int temp;
 
-	if (lo < hi) {
-		p = ipartition(a, lo, hi, ip);
-		iquicksort(a, lo, p.left, ip);
-		iquicksort(a, p.right, hi, ip);
-	}
+	temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+static inline void fswap_elements(float a[], int i, int j, int ip[])
+{
+	fswap(&a[i], &a[j]);
+	if (ip)
+		iswap(&ip[i], &ip[j]);
+}
+
+static inline void iswap_elements(int a[], int i, int j, int ip[])
+{
+	iswap(&a[i], &a[j]);
+	if (ip)
+		iswap(&ip[i], &ip[j]);
+}
+
+static inline float fmedian3(float a[], int lo, int hi, int ip[])
+{
+	int mid = lo + (hi - lo) / 2;
+
+	if (a[lo] > a[mid])
+		fswap_elements(a, lo, mid, ip);
+	if (a[lo] > a[hi])
+		fswap_elements(a, lo, hi, ip);
+	if (a[mid] > a[hi])
+		fswap_elements(a, mid, hi, ip);
+
+	return a[hi];
+}
+
+static inline int imedian3(int a[], int lo, int hi, int ip[])
+{
+	int mid = lo + (hi - lo) / 2;
+
+	if (a[lo] > a[mid])
+		iswap_elements(a, lo, mid, ip);
+	if (a[lo] > a[hi])
+		iswap_elements(a, lo, hi, ip);
+	if (a[mid] > a[hi])
+		iswap_elements(a, mid, hi, ip);
+
+	return a[hi];
 }
 
 static inline struct partition fpartition(float a[], int lo, int hi, int ip[])
@@ -79,62 +105,24 @@ static inline struct partition ipartition(int a[], int lo, int hi, int ip[])
 	return (struct partition){j, i + 1};
 }
 
-static inline float fmedian3(float a[], int lo, int hi, int ip[])
+void fquicksort(float a[], int lo, int hi, int ip[])
 {
-	int mid = lo + (hi - lo) / 2;
+	struct partition p;
 
-	if (a[lo] > a[mid])
-		fswap_elements(a, lo, mid, ip);
-	if (a[lo] > a[hi])
-		fswap_elements(a, lo, hi, ip);
-	if (a[mid] > a[hi])
-		fswap_elements(a, mid, hi, ip);
-
-	return a[hi];
+	if (lo < hi) {
+		p = fpartition(a, lo, hi, ip);
+		fquicksort(a, lo, p.left, ip);
+		fquicksort(a, p.right, hi, ip);
+	}
 }
 
-static inline int imedian3(int a[], int lo, int hi, int ip[])
+void iquicksort(int a[], int lo, int hi, int ip[])
 {
-	int mid = lo + (hi - lo) / 2;
+	struct partition p;
 
-	if (a[lo] > a[mid])
-		iswap_elements(a, lo, mid, ip);
-	if (a[lo] > a[hi])
-		iswap_elements(a, lo, hi, ip);
-	if (a[mid] > a[hi])
-		iswap_elements(a, mid, hi, ip);
-
-	return a[hi];
-}
-
-static inline void fswap_elements(float a[], int i, int j, int ip[])
-{
-	fswap(&a[i], &a[j]);
-	if (ip)
-		iswap(&ip[i], &ip[j]);
-}
-
-static inline void iswap_elements(int a[], int i, int j, int ip[])
-{
-	iswap(&a[i], &a[j]);
-	if (ip)
-		iswap(&ip[i], &ip[j]);
-}
-
-static inline void fswap(float *a, float *b)
-{
-	float temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
-}
-
-static inline void iswap(int *a, int *b)
-{
-	int temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
+	if (lo < hi) {
+		p = ipartition(a, lo, hi, ip);
+		iquicksort(a, lo, p.left, ip);
+		iquicksort(a, p.right, hi, ip);
+	}
 }
