@@ -1,5 +1,4 @@
-void fquicksort(float a[], int lo, int hi, int ip[]);
-void iquicksort(int a[], int lo, int hi, int ip[]);
+#include "quicksort.h"
 
 static inline struct partition fpartition(float a[], int lo, int hi, int ip[]);
 static inline struct partition ipartition(int a[], int lo, int hi, int ip[]);
