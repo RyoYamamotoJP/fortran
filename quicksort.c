@@ -14,7 +14,7 @@ static inline void fswap(float *a, float *b)
 	*b = temp;
 }
 
-static inline void iswap(int *a, int *b)
+static inline void iswap(int32_t *a, int32_t *b)
 {
 	int temp;
 
@@ -39,7 +39,7 @@ static inline void fswap_elements(float a[], size_t i, size_t j, size_t ip[])
 		size_tswap(&ip[i], &ip[j]);
 }
 
-static inline void iswap_elements(int a[], size_t i, size_t j, size_t ip[])
+static inline void iswap_elements(int32_t a[], size_t i, size_t j, size_t ip[])
 {
 	iswap(&a[i], &a[j]);
 	if (ip)
@@ -60,7 +60,7 @@ static inline float fmedian3(float a[], size_t lo, size_t hi, size_t ip[])
 	return a[hi];
 }
 
-static inline int imedian3(int a[], size_t lo, size_t hi, size_t ip[])
+static inline int imedian3(int32_t a[], size_t lo, size_t hi, size_t ip[])
 {
 	size_t mid = lo + (hi - lo) / 2;
 
@@ -94,9 +94,9 @@ static inline struct partition fpartition(float a[], size_t lo, size_t hi, size_
 	return (struct partition){j, i + 1};
 }
 
-static inline struct partition ipartition(int a[], size_t lo, size_t hi, size_t ip[])
+static inline struct partition ipartition(int32_t a[], size_t lo, size_t hi, size_t ip[])
 {
-	int pivot = imedian3(a, lo, hi, ip);
+	int32_t pivot = imedian3(a, lo, hi, ip);
 	size_t i = lo - 1;
 	size_t j = hi;
 
@@ -123,7 +123,7 @@ void fquicksort(float a[], size_t lo, size_t hi, size_t ip[])
 	}
 }
 
-void iquicksort(int a[], size_t lo, size_t hi, size_t ip[])
+void iquicksort(int32_t a[], size_t lo, size_t hi, size_t ip[])
 {
 	if (lo < hi) {
 		struct partition p = ipartition(a, lo, hi, ip);

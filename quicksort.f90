@@ -16,8 +16,8 @@ module quicksort
         end subroutine fquicksort
 
         subroutine iquicksort(a, lo, hi, ip) bind(C)
-            use iso_c_binding, only: c_int, c_size_t
-            integer(c_int), intent(inout) :: a(*)
+            use iso_c_binding, only: c_int32_t, c_size_t
+            integer(c_int32_t), intent(inout) :: a(*)
             integer(c_size_t), value, intent(in) :: lo, hi
             integer(c_size_t), intent(inout) :: ip(*)
         end subroutine iquicksort
