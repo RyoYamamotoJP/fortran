@@ -16,7 +16,7 @@ static inline void fswap(float *a, float *b)
 
 static inline void iswap(int32_t *a, int32_t *b)
 {
-	int temp;
+	int32_t temp;
 
 	temp = *a;
 	*a = *b;
@@ -60,7 +60,7 @@ static inline float fmedian3(float a[], size_t lo, size_t hi, size_t ip[])
 	return a[hi];
 }
 
-static inline int imedian3(int32_t a[], size_t lo, size_t hi, size_t ip[])
+static inline int32_t imedian3(int32_t a[], size_t lo, size_t hi, size_t ip[])
 {
 	size_t mid = lo + (hi - lo) / 2;
 
