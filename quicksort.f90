@@ -1,5 +1,5 @@
 module quicksort
-    use iso_fortran_env, only: int64
+    use, intrinsic :: iso_fortran_env, only: int64
     implicit none
     private
 
@@ -9,14 +9,14 @@ module quicksort
 
     interface
         subroutine fquicksort(a, lo, hi, ip) bind(c)
-            use iso_c_binding, only: c_float, c_size_t
+            use, intrinsic :: iso_c_binding, only: c_float, c_size_t
             real(c_float), intent(inout) :: a(*)
             integer(c_size_t), value, intent(in) :: lo, hi
             integer(c_size_t), intent(inout) :: ip(*)
         end subroutine fquicksort
 
         subroutine iquicksort(a, lo, hi, ip) bind(c)
-            use iso_c_binding, only: c_int32_t, c_size_t
+            use, intrinsic :: iso_c_binding, only: c_int32_t, c_size_t
             integer(c_int32_t), intent(inout) :: a(*)
             integer(c_size_t), value, intent(in) :: lo, hi
             integer(c_size_t), intent(inout) :: ip(*)
