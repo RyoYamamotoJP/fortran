@@ -1,8 +1,8 @@
 #include "quicksort.h"
 
 struct partition {
-	int left;
-	int right;
+	size_t left;
+	size_t right;
 };
 
 static inline void fswap(float *a, float *b)
@@ -14,32 +14,41 @@ static inline void fswap(float *a, float *b)
 	*b = temp;
 }
 
-static inline void iswap(int *a, int *b)
+static inline void iswap(int32_t *a, int32_t *b)
 {
-	int temp;
+	int32_t temp;
 
 	temp = *a;
 	*a = *b;
 	*b = temp;
 }
 
-static inline void fswap_elements(float a[], int i, int j, int ip[])
+static inline void size_tswap(size_t *a, size_t *b)
+{
+	size_t temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+static inline void fswap_elements(float a[], size_t i, size_t j, size_t ip[])
 {
 	fswap(&a[i], &a[j]);
 	if (ip)
-		iswap(&ip[i], &ip[j]);
+		size_tswap(&ip[i], &ip[j]);
 }
 
-static inline void iswap_elements(int a[], int i, int j, int ip[])
+static inline void iswap_elements(int32_t a[], size_t i, size_t j, size_t ip[])
 {
 	iswap(&a[i], &a[j]);
 	if (ip)
-		iswap(&ip[i], &ip[j]);
+		size_tswap(&ip[i], &ip[j]);
 }
 
-static inline float fmedian3(float a[], int lo, int hi, int ip[])
+static inline float fmedian3(float a[], size_t lo, size_t hi, size_t ip[])
 {
-	int mid = lo + (hi - lo) / 2;
+	size_t mid = lo + (hi - lo) / 2;
 
 	if (a[lo] > a[mid])
 		fswap_elements(a, lo, mid, ip);
@@ -51,9 +60,9 @@ static inline float fmedian3(float a[], int lo, int hi, int ip[])
 	return a[hi];
 }
 
-static inline int imedian3(int a[], int lo, int hi, int ip[])
+static inline int32_t imedian3(int32_t a[], size_t lo, size_t hi, size_t ip[])
 {
-	int mid = lo + (hi - lo) / 2;
+	size_t mid = lo + (hi - lo) / 2;
 
 	if (a[lo] > a[mid])
 		iswap_elements(a, lo, mid, ip);
@@ -65,11 +74,11 @@ static inline int imedian3(int a[], int lo, int hi, int ip[])
 	return a[hi];
 }
 
-static inline struct partition fpartition(float a[], int lo, int hi, int ip[])
+static inline struct partition fpartition(float a[], size_t lo, size_t hi, size_t ip[])
 {
 	float pivot = fmedian3(a, lo, hi, ip);
-	int i = lo - 1;
-	int j = hi;
+	size_t i = lo - 1;
+	size_t j = hi;
 
 	for (;;) {
 		while (a[++i] < pivot)
@@ -85,11 +94,11 @@ static inline struct partition fpartition(float a[], int lo, int hi, int ip[])
 	return (struct partition){j, i + 1};
 }
 
-static inline struct partition ipartition(int a[], int lo, int hi, int ip[])
+static inline struct partition ipartition(int32_t a[], size_t lo, size_t hi, size_t ip[])
 {
-	int pivot = imedian3(a, lo, hi, ip);
-	int i = lo - 1;
-	int j = hi;
+	int32_t pivot = imedian3(a, lo, hi, ip);
+	size_t i = lo - 1;
+	size_t j = hi;
 
 	for (;;) {
 		while (a[++i] < pivot)
@@ -105,7 +114,7 @@ static inline struct partition ipartition(int a[], int lo, int hi, int ip[])
 	return (struct partition){j, i + 1};
 }
 
-void fquicksort(float a[], int lo, int hi, int ip[])
+void fquicksort(float a[], size_t lo, size_t hi, size_t ip[])
 {
 	if (lo < hi) {
 		struct partition p = fpartition(a, lo, hi, ip);
@@ -114,7 +123,7 @@ void fquicksort(float a[], int lo, int hi, int ip[])
 	}
 }
 
-void iquicksort(int a[], int lo, int hi, int ip[])
+void iquicksort(int32_t a[], size_t lo, size_t hi, size_t ip[])
 {
 	if (lo < hi) {
 		struct partition p = ipartition(a, lo, hi, ip);
