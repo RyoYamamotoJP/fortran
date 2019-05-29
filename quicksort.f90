@@ -8,19 +8,19 @@ module quicksort
     end interface sort
 
     interface
-        subroutine fquicksort(a, lo, hi, ip) bind(c)
+        subroutine c_fsort(a, n, ip) bind(c, name='fsort')
             use, intrinsic :: iso_c_binding, only: c_float, c_size_t
             real(c_float), intent(inout) :: a(*)
-            integer(c_size_t), value, intent(in) :: lo, hi
+            integer(c_size_t), value, intent(in) :: n
             integer(c_size_t), intent(inout) :: ip(*)
-        end subroutine fquicksort
+        end subroutine c_fsort
 
-        subroutine iquicksort(a, lo, hi, ip) bind(c)
+        subroutine c_isort(a, n, ip) bind(c, name='isort')
             use, intrinsic :: iso_c_binding, only: c_int32_t, c_size_t
             integer(c_int32_t), intent(inout) :: a(*)
-            integer(c_size_t), value, intent(in) :: lo, hi
+            integer(c_size_t), value, intent(in) :: n
             integer(c_size_t), intent(inout) :: ip(*)
-        end subroutine iquicksort
+        end subroutine c_isort
     end interface
 
     public :: sort
@@ -28,30 +28,20 @@ contains
     subroutine isort(array, index_array)
         integer, intent(inout) :: array(:)
         integer(int64), intent(out), optional :: index_array(:)
-        integer :: n
+        integer(int64) :: n
 
         n = size(array)
-        if (present(index_array)) index_array = iota(n)
-        call iquicksort(array, int(0, int64), int(n - 1, int64), index_array)
+        call c_isort(array, n, index_array)
+        if (present(index_array)) index_array = index_array + 1
     end subroutine isort
 
     subroutine rsort(array, index_array)
         real, intent(inout) :: array(:)
         integer(int64), intent(out), optional :: index_array(:)
-        integer :: n
+        integer(int64) :: n
 
         n = size(array)
-        if (present(index_array)) index_array = iota(n)
-        call fquicksort(array, int(0, int64), int(n - 1, int64), index_array)
+        call c_fsort(array, n, index_array)
+        if (present(index_array)) index_array = index_array + 1
     end subroutine rsort
-
-    pure function iota(n) result(a)
-        integer, intent(in) :: n
-        integer :: i
-        integer(int64) :: a(n)
-
-        do i = 1, n
-            a(i) = i
-        end do
-    end function iota
 end module quicksort

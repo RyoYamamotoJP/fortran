@@ -114,7 +114,7 @@ static inline struct partition ipartition(int32_t *restrict a, size_t lo, size_t
 	return (struct partition){j, i + 1};
 }
 
-void fquicksort(float *restrict a, size_t lo, size_t hi, size_t *restrict ip)
+static inline void fquicksort(float *restrict a, size_t lo, size_t hi, size_t *restrict ip)
 {
 	if (lo < hi) {
 		struct partition p = fpartition(a, lo, hi, ip);
@@ -123,11 +123,31 @@ void fquicksort(float *restrict a, size_t lo, size_t hi, size_t *restrict ip)
 	}
 }
 
-void iquicksort(int32_t *restrict a, size_t lo, size_t hi, size_t *restrict ip)
+static inline void iquicksort(int32_t *restrict a, size_t lo, size_t hi, size_t *restrict ip)
 {
 	if (lo < hi) {
 		struct partition p = ipartition(a, lo, hi, ip);
 		iquicksort(a, lo, p.left, ip);
 		iquicksort(a, p.right, hi, ip);
 	}
+}
+
+static inline void init_ip(size_t *restrict ip, size_t n)
+{
+	for (size_t i = 0; i < n; i++)
+		ip[i] = i;
+}
+
+void fsort(float *restrict a, size_t n, size_t *restrict ip)
+{
+	if (ip)
+		init_ip(ip, n);
+	fquicksort(a, 0, n - 1, ip);
+}
+
+void isort(int32_t *restrict a, size_t n, size_t *restrict ip)
+{
+	if (ip)
+		init_ip(ip, n);
+	iquicksort(a, 0, n - 1, ip);
 }
