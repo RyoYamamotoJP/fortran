@@ -9,6 +9,18 @@ module quicksort
     end interface sort
 
     interface
+        module subroutine isort(array, index_array)
+            integer(int32), intent(inout) :: array(:)
+            integer(int64), intent(out), optional :: index_array(:)
+        end subroutine isort
+
+        module subroutine rsort(array, index_array)
+            real(real32), intent(inout) :: array(:)
+            integer(int64), intent(out), optional :: index_array(:)
+        end subroutine rsort
+    end interface
+
+    interface
         subroutine c_fsort(a, n, ip) bind(c, name='fsort')
             use, intrinsic :: iso_c_binding, only: c_float, c_size_t
             real(c_float), intent(inout) :: a(*)
@@ -23,24 +35,28 @@ module quicksort
             integer(c_size_t), intent(inout), optional :: ip(*)
         end subroutine c_isort
     end interface
-contains
-    subroutine isort(array, index_array)
-        integer(int32), intent(inout) :: array(:)
-        integer(int64), intent(out), optional :: index_array(:)
-        integer(int64) :: n
+end module quicksort
 
+submodule (quicksort) isort_impl
+    use, intrinsic :: iso_fortran_env, only: int64
+
+    integer(int64) :: n
+contains
+    module procedure isort
         n = size(array)
         call c_isort(array, n, index_array)
         if (present(index_array)) index_array = index_array + 1
-    end subroutine isort
+    end procedure isort
+end submodule isort_impl
 
-    subroutine rsort(array, index_array)
-        real(real32), intent(inout) :: array(:)
-        integer(int64), intent(out), optional :: index_array(:)
-        integer(int64) :: n
+submodule (quicksort) rsort_impl
+    use, intrinsic :: iso_fortran_env, only: int64
 
+    integer(int64) :: n
+contains
+    module procedure rsort
         n = size(array)
         call c_fsort(array, n, index_array)
         if (present(index_array)) index_array = index_array + 1
-    end subroutine rsort
-end module quicksort
+    end procedure rsort
+end submodule rsort_impl
