@@ -12,14 +12,14 @@ module quicksort
             use, intrinsic :: iso_c_binding, only: c_float, c_size_t
             real(c_float), intent(inout) :: a(*)
             integer(c_size_t), value, intent(in) :: n
-            integer(c_size_t), intent(inout) :: ip(*)
+            integer(c_size_t), intent(inout), optional :: ip(*)
         end subroutine c_fsort
 
         subroutine c_isort(a, n, ip) bind(c, name='isort')
             use, intrinsic :: iso_c_binding, only: c_int32_t, c_size_t
             integer(c_int32_t), intent(inout) :: a(*)
             integer(c_size_t), value, intent(in) :: n
-            integer(c_size_t), intent(inout) :: ip(*)
+            integer(c_size_t), intent(inout), optional :: ip(*)
         end subroutine c_isort
     end interface
 
