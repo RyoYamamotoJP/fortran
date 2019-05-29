@@ -1,5 +1,5 @@
 module quicksort
-    use, intrinsic :: iso_fortran_env, only: int64
+    use, intrinsic :: iso_fortran_env, only: int32, int64, real32
     implicit none
     private
 
@@ -26,7 +26,7 @@ module quicksort
     public :: sort
 contains
     subroutine isort(array, index_array)
-        integer, intent(inout) :: array(:)
+        integer(int32), intent(inout) :: array(:)
         integer(int64), intent(out), optional :: index_array(:)
         integer(int64) :: n
 
@@ -36,7 +36,7 @@ contains
     end subroutine isort
 
     subroutine rsort(array, index_array)
-        real, intent(inout) :: array(:)
+        real(real32), intent(inout) :: array(:)
         integer(int64), intent(out), optional :: index_array(:)
         integer(int64) :: n
 
