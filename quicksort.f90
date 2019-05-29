@@ -2,6 +2,7 @@ module quicksort
     use, intrinsic :: iso_fortran_env, only: int32, int64, real32
     implicit none
     private
+    public :: sort
 
     interface sort
         module procedure isort, rsort
@@ -22,8 +23,6 @@ module quicksort
             integer(c_size_t), intent(inout), optional :: ip(*)
         end subroutine c_isort
     end interface
-
-    public :: sort
 contains
     subroutine isort(array, index_array)
         integer(int32), intent(inout) :: array(:)
