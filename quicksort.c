@@ -40,9 +40,14 @@ static inline void iswap_elements(int32_t *restrict a, size_t i, size_t j, size_
 		size_tswap(ip, i, j);
 }
 
+static inline size_t mid_index(size_t lo, size_t hi)
+{
+	return lo + ((hi - lo) >> 1);
+}
+
 static inline float fmedian3(float *restrict a, size_t lo, size_t hi, size_t *restrict ip)
 {
-	size_t mid = lo + (hi - lo) / 2;
+	size_t mid = mid_index(lo, hi);
 
 	if (a[lo] > a[mid])
 		fswap_elements(a, lo, mid, ip);
@@ -56,7 +61,7 @@ static inline float fmedian3(float *restrict a, size_t lo, size_t hi, size_t *re
 
 static inline int32_t imedian3(int32_t *restrict a, size_t lo, size_t hi, size_t *restrict ip)
 {
-	size_t mid = lo + (hi - lo) / 2;
+	size_t mid = mid_index(lo, hi);
 
 	if (a[lo] > a[mid])
 		iswap_elements(a, lo, mid, ip);
