@@ -134,7 +134,7 @@ static inline void iquicksort(int32_t *restrict a, size_t lo, size_t hi, size_t 
 
 static inline void init_ip(size_t *restrict ip, size_t n)
 {
-	for (size_t i = 0; i < n; i++)
+	for (size_t i = 0; i < n; ++i)
 		ip[i] = i;
 }
 
