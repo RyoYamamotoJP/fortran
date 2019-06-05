@@ -76,7 +76,7 @@ static inline int32_t imedian3(int32_t *restrict a, size_t lo, size_t hi, size_t
 static inline struct partition fpartition(float *restrict a, size_t lo, size_t hi, size_t *restrict ip)
 {
 	float pivot = fmedian3(a, lo, hi, ip);
-	size_t i = lo - 1;
+	size_t i = lo;
 	size_t j = hi;
 
 	for (;;) {
@@ -96,7 +96,7 @@ static inline struct partition fpartition(float *restrict a, size_t lo, size_t h
 static inline struct partition ipartition(int32_t *restrict a, size_t lo, size_t hi, size_t *restrict ip)
 {
 	int32_t pivot = imedian3(a, lo, hi, ip);
-	size_t i = lo - 1;
+	size_t i = lo;
 	size_t j = hi;
 
 	for (;;) {
