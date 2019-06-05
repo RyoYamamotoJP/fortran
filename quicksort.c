@@ -5,45 +5,39 @@ struct partition {
 	size_t right;
 };
 
-static inline void fswap(float *restrict a, float *restrict b)
+static inline void fswap(float *restrict a, size_t i, size_t j)
 {
-	float temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
+	float temp = a[i];
+	a[i] = a[j];
+	a[j] = temp;
 }
 
-static inline void iswap(int32_t *restrict a, int32_t *restrict b)
+static inline void iswap(int32_t *restrict a, size_t i, size_t j)
 {
-	int32_t temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
+	int32_t temp = a[i];
+	a[i] = a[j];
+	a[j] = temp;
 }
 
-static inline void size_tswap(size_t *restrict a, size_t *restrict b)
+static inline void size_tswap(size_t *restrict a, size_t i, size_t j)
 {
-	size_t temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
+	size_t temp = a[i];
+	a[i] = a[j];
+	a[j] = temp;
 }
 
 static inline void fswap_elements(float *restrict a, size_t i, size_t j, size_t *restrict ip)
 {
-	fswap(&a[i], &a[j]);
+	fswap(a, i, j);
 	if (ip)
-		size_tswap(&ip[i], &ip[j]);
+		size_tswap(ip, i, j);
 }
 
 static inline void iswap_elements(int32_t *restrict a, size_t i, size_t j, size_t *restrict ip)
 {
-	iswap(&a[i], &a[j]);
+	iswap(a, i, j);
 	if (ip)
-		size_tswap(&ip[i], &ip[j]);
+		size_tswap(ip, i, j);
 }
 
 static inline float fmedian3(float *restrict a, size_t lo, size_t hi, size_t *restrict ip)
