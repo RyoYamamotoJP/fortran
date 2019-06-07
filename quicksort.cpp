@@ -2,19 +2,11 @@
 using namespace std;
 
 template<typename T>
-static inline void swap(T* a, size_t i, size_t j)
-{
-    T temp = a[i];
-    a[i] = a[j];
-    a[j] = temp;
-}
-
-template<typename T>
 static inline void swap_elements(T* a, size_t i, size_t j, size_t* ip)
 {
-    swap(a, i, j);
+    swap(a[i], a[j]);
     if (ip)
-        swap(ip, i, j);
+        swap(ip[i], ip[j]);
 }
 
 static inline size_t mid_index(size_t lo, size_t hi)
