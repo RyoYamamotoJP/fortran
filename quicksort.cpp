@@ -2,19 +2,11 @@
 using namespace std;
 
 template<typename T>
-static inline void swap(T* a, size_t i, size_t j)
-{
-    T temp = a[i];
-    a[i] = a[j];
-    a[j] = temp;
-}
-
-template<typename T>
 static inline void swap_elements(T* a, size_t i, size_t j, size_t* ip)
 {
-    swap(a, i, j);
+    swap(a[i], a[j]);
     if (ip)
-        swap(ip, i, j);
+        swap(ip[i], ip[j]);
 }
 
 static inline size_t mid_index(size_t lo, size_t hi)
@@ -55,16 +47,16 @@ static inline pair<size_t, size_t> partition(T* a, size_t lo, size_t hi, size_t*
     }
     swap_elements(a, i, hi, ip);
 
-    return make_pair(j, i + 1);
+    return {j, i + 1};
 }
 
 template<typename T>
 static inline void quicksort(T* a, size_t lo, size_t hi, size_t* ip)
 {
     if (lo < hi) {
-        pair<size_t, size_t> p = partition(a, lo, hi, ip);
-        quicksort(a, lo, p.first, ip);
-        quicksort(a, p.second, hi, ip);
+        auto [left, right] = partition(a, lo, hi, ip);
+        quicksort(a, lo, left, ip);
+        quicksort(a, right, hi, ip);
     }
 }
 
