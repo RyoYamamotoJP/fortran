@@ -62,9 +62,9 @@ template<typename T>
 static inline void quicksort(T* a, size_t lo, size_t hi, size_t* ip)
 {
     if (lo < hi) {
-        pair<size_t, size_t> p = partition(a, lo, hi, ip);
-        quicksort(a, lo, p.first, ip);
-        quicksort(a, p.second, hi, ip);
+        auto [left, right] = partition(a, lo, hi, ip);
+        quicksort(a, lo, left, ip);
+        quicksort(a, right, hi, ip);
     }
 }
 
