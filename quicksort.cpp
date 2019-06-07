@@ -55,7 +55,7 @@ static inline pair<size_t, size_t> partition(T* a, size_t lo, size_t hi, size_t*
     }
     swap_elements(a, i, hi, ip);
 
-    return make_pair(j, i + 1);
+    return {j, i + 1};
 }
 
 template<typename T>
