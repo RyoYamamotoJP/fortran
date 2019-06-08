@@ -15,7 +15,7 @@ static inline size_t middle_index(size_t lo, size_t hi)
 }
 
 template<typename T>
-static inline T median3(T* a, size_t lo, size_t hi, size_t* ip)
+static inline T median_of_3(T* a, size_t lo, size_t hi, size_t* ip)
 {
     size_t mid = middle_index(lo, hi);
 
@@ -32,7 +32,7 @@ static inline T median3(T* a, size_t lo, size_t hi, size_t* ip)
 template<typename T>
 static inline pair<size_t, size_t> partition(T* a, size_t lo, size_t hi, size_t* ip)
 {
-    T pivot = median3(a, lo, hi, ip);
+    T pivot = median_of_3(a, lo, hi, ip);
     size_t i = lo;
     size_t j = hi;
 
