@@ -9,7 +9,7 @@ static inline void swap_elements(T* a, size_t i, size_t j, size_t* ip)
         swap(ip[i], ip[j]);
 }
 
-static inline size_t mid_index(size_t lo, size_t hi)
+static inline size_t middle_index(size_t lo, size_t hi)
 {
     return lo + ((hi - lo) >> 1);
 }
@@ -17,7 +17,7 @@ static inline size_t mid_index(size_t lo, size_t hi)
 template<typename T>
 static inline T median3(T* a, size_t lo, size_t hi, size_t* ip)
 {
-    size_t mid = mid_index(lo, hi);
+    size_t mid = middle_index(lo, hi);
 
     if (a[lo] > a[mid])
         swap_elements(a, lo, mid, ip);
