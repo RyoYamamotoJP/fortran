@@ -4,10 +4,6 @@ module quicksort
     public :: sort
 
     interface sort
-        module procedure isort, rsort
-    end interface sort
-
-    interface
         module subroutine isort(array, index_array)
             use, intrinsic :: iso_fortran_env, only: int32, int64
             integer(int32), intent(inout) :: array(:)
@@ -19,7 +15,7 @@ module quicksort
             real(real32), intent(inout) :: array(:)
             integer(int64), intent(out), optional :: index_array(:)
         end subroutine rsort
-    end interface
+    end interface sort
 
     interface
         subroutine c_fsort(a, n, ip) bind(c, name='fsort')
